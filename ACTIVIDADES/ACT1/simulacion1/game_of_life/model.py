@@ -19,21 +19,21 @@ class ConwaysGameOfLife(Model):
             ( 1, -1), ( 1, 0), ( 1, 1),
         ]
         """
-        self.grid = OrthogonalMooreGrid((width, height), capacity=1, torus=True)  # width, height, capacidad, torus = es como
-        # doblar la pantalla
+        self.grid = OrthogonalMooreGrid((width, height), capacity=1, torus=True) 
 
         # Place a cell at each location, with some initialized to
         # ALIVE and some to DEAD.
-        for cell in self.grid.all_cells: 
+        for cell in self.grid.all_cells: #New cells are created in each of those positions
+                                        #the self is like a this, a reference to the same object
             Cell(
                 self,
                 cell,
                 init_state=(
-                    Cell.ALIVE #ALIVE es como un atributo estatico, es decir, no depende de la instancia
-                    if cell.coordinate[0] < 50 and cell.coordinate[1] == 49 and
-                    self.random.random() < initial_fraction_alive
+                    Cell.ALIVE 
+                    if cell.coordinate[0] < 50 and cell.coordinate[1] == 49 
+                        and self.random.random() < initial_fraction_alive
                     else Cell.DEAD
-                 ),
+                ),
             )
 
         self.running = True
@@ -45,4 +45,4 @@ class ConwaysGameOfLife(Model):
         - Then, all cells change state to their next state.
         """
         self.agents.do("determine_state")
-        self.agents.do("assume_state") #tienen que coincidir los nombres con los metodos de la clase Cell
+        self.agents.do("assume_state") #the names must match the method names of the cell class

@@ -6,17 +6,19 @@ from mesa.visualization import (
 
 from mesa.visualization.components import AgentPortrayalStyle
 
-def agent_portrayal(agent): #con esto podemos visualizar como queremos que se vean los diferentes agentes
+def agent_portrayal(agent): #this allows us to visualize how we want the different agents to look
     return AgentPortrayalStyle(
         color="white" if agent.state == 0 else "black",
         marker="s",
         size=30,
     )
 
-def post_process(ax): #esto se hace con matplotlib, y aqui decido como quiero que se vea la grafica
+def post_process(ax): #this is done with matplotlib, and here I decide how I want the graph to look
     ax.set_aspect("equal")
+    ax.set_xticks([])
+    ax.set_yticks([])
 
-model_params = { #diccionario en python, es como un json
+model_params = { #dictionary in python, it's like a json
     "seed": {
         "type": "InputText",
         "value": 42,
@@ -49,15 +51,15 @@ model_params = { #diccionario en python, es como un json
 }
 
 # Create initial model instance 
-gof_model = ConwaysGameOfLife() #creo el modelo
+gof_model = ConwaysGameOfLife() 
 
-space_component = make_space_component( #creo el componente visual que va a mostrar el modelo
+space_component = make_space_component( #I create the space component that will be used to visualize the model
         agent_portrayal,
         draw_grid = False,
         post_process=post_process
 )
 
-page = SolaraViz( #recibo que modelo uso, que componente dibujo y con que parametros
+page = SolaraViz( #I receive the model I use, the drawing component and the parameters with which I work
     gof_model,
     components=[space_component],
     model_params=model_params,
